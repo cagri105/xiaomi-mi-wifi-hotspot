@@ -25,6 +25,33 @@
 
 ---
 
+## 📸 Ekran Görüntüleri (Screenshots)
+
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <b>📡 Mobil Hotspot & Bağlı Cihazlar</b><br>
+      <img src="assets/1.png" alt="Mobil Hotspot" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <b>🌐 Özel DNS & Güvenlik Profilleri</b><br>
+      <img src="assets/2.png" alt="Özel DNS" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <b>📶 Wi-Fi Ağları</b><br>
+      <img src="assets/3.png" alt="Wi-Fi Ağları" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <b>⚙️ Ayarlar, Trafik & Ağ Onarımı</b><br>
+      <img src="assets/4.png" alt="Ayarlar ve Araçlar" width="100%">
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 🚀 Hızlı Başlangıç (Hazır EXE)
 
 1. [Releases](../../releases) bölümünden en güncel **`Xiaomi_MiWiFi_Turkce.exe`** dosyasını indirin.
