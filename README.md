@@ -7,6 +7,10 @@
 
 **Xiaomi Portable Mi WiFi (Mini USB Dongle)** adaptörünü Windows 10 ve Windows 11 üzerinde tak-çalıştır hızında mobil erişim noktası (Hotspot) veya Wi-Fi alıcısı olarak çalıştırmayı sağlayan Türkçe, modern ve gelişmiş yönetim yazılımıdır.
 
+<p align="center">
+  <img src="assets/banner.jpg" alt="Xiaomi Portable Mi WiFi Dongles" width="700">
+</p>
+
 ---
 
 ## ✨ Özellikler
