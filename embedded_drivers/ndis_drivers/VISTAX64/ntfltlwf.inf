@@ -1,0 +1,83 @@
+;-------------------------------------------------------------------------
+; ntfltlwf.inf -- NDIS LWF driver
+;-------------------------------------------------------------------------
+[version]
+Signature   	= "$Windows NT$"
+Class     	= NetService
+ClassGUID  	= {4D36E974-E325-11CE-BFC1-08002BE10318}
+Provider    	= %Company%
+CatalogFile=ntfltlwf.cat
+DriverVer=03/10/2014,1.0.1.0
+
+[Manufacturer]
+%Company%=Network,NTx86,NTamd64
+
+[Network.NTx86]
+%Network.DeviceDesc%=Install, net_ndisfilter
+
+[Network.NTamd64]
+%Network.DeviceDesc%=Install, net_ndisfilter
+
+;-------------------------------------------------------------------------
+; Installation Section
+;-------------------------------------------------------------------------
+[Install]
+AddReg=Inst_Ndi
+Characteristics=0x40000
+NetCfgInstanceId="{2AB59305-C7D7-405C-A214-520308543799}"
+Copyfiles = ndislwf.copyfiles.sys
+
+[SourceDisksNames]
+1=%DiskDescription%,"",,
+
+[SourceDisksFiles]
+ntflt.sys=1
+
+[DestinationDirs]
+DefaultDestDir=12
+ndislwf.copyfiles.sys=12
+
+[ndislwf.copyfiles.sys]
+ntflt.sys,,,2
+
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+[Inst_Ndi]
+HKR, Ndi,Service,,"ntflt"
+HKR, Ndi,CoServices,0x00010000,"ntflt"
+HKR, Ndi,HelpText,,%NdisLwf_HelpText%
+HKR, Ndi,FilterClass,, compression
+HKR, Ndi,FilterType,0x00010001,0x00000002
+HKR, Ndi\Interfaces,UpperRange,,"noupper"
+HKR, Ndi\Interfaces,LowerRange,,"nolower"
+HKR, Ndi\Interfaces, FilterMediaTypes,,"ethernet, wan, ppip"
+HKR, Ndi,FilterRunType, 0x00010001, 1 ;this filter must run before any protocol can bind to the below miniport 
+
+;-------------------------------------------------------------------------
+; Service installation support
+;-------------------------------------------------------------------------
+[Install.Services]
+AddService=ntflt,,ntflt_Service_Inst
+
+[ntflt_Service_Inst]
+DisplayName     = %Service_Desc%
+ServiceType     = 1 ;SERVICE_KERNEL_DRIVER
+StartType       = 1 ;SERVICE_SYSTEM_START
+ErrorControl    = 1 ;SERVICE_ERROR_NORMAL
+ServiceBinary   = %12%\ntflt.sys
+LoadOrderGroup  = NDIS
+Description     = %Service_Desc%
+
+[Install.Remove.Services]
+DelService=ntflt,0x200
+
+[Strings]
+Company = "Network"
+DiskDescription = "Network LightWeight Filter Disk"
+
+Network.DeviceDesc = "Network LightWeight Filter"
+NdisLwf_HelpText = "Network NDIS LightWeight Filter"
+Service_Desc = "Network LightWeight Filter"
+

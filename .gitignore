@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.spec.bak
+
+# Virtual Environment
+venv/
+env/
+.env/
+
+# PyInstaller Build Output
+build/
+dist/
+
+# Scratch & Temporary Logs
+scratch/
+*.log
+.miwifi_net_config.json
+driver_extracted/
+extracted_res/
+test_*.py
+debug_*.py
+diagnose_*.py
+dump_res.py
+extract_*.py
+find_devices.py
+inspect_setup.py
+make_permanent.py
+patch_drivers.py
+pe_analyzer.py
+backend_test.py
+check_present.py
+
+# IDEs
+.vscode/
+.idea/

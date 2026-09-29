@@ -1,0 +1,113 @@
+; -- ntflt.inf --
+;
+; Installation inf file for the service (protocol) driver
+;
+; ----------------------------------------------------------------------
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = NetService
+ClassGUID   = {4D36E974-E325-11CE-BFC1-08002BE10318}
+Provider    = %Company%
+DriverVer   = 03/11/2014,1.0.1.0
+CatalogFile.ntx86 = ntflt.cat
+CatalogFile.ntamd64 = ntfltx.cat
+
+[Manufacturer]
+%Company% = Network,NTx86,NTamd64
+
+[ControlFlags]
+
+;=========================================================================
+;
+;=========================================================================
+;For Win2K
+[Network]
+%Network.DeviceDesc% = NTFLT.ndi, net_ndisfilter
+ 
+;For WinXP and later
+[Network.NTx86]
+%Network.DeviceDesc% = NTFLT.ndi, net_ndisfilter
+
+[Network.NTamd64]
+%Network.DeviceDesc% = NTFLT.ndi, net_ndisfilter
+
+;=========================================================================
+; x86
+;=========================================================================
+[NTFLT.ndi]
+AddReg          = NTFLT.ndi.AddReg, NTFLT.AddReg
+Characteristics = 0x4410 ;  NCF_FILTER | NCF_NDIS_PROTOCOL !--Filter Specific--!!
+CopyFiles       = NTFLT.Files.Sys
+CopyInf         = ntflt_m.inf
+
+[NTFLT.ndi.Remove]
+DelFiles = NTFLT.Files.Sys
+
+[NTFLT.ndi.Services]
+AddService = ntflt,, ntflt.AddService
+
+[ntflt.AddService]
+DisplayName    = %NTService_Desc%
+ServiceType    = 1 ;SERVICE_KERNEL_DRIVER
+StartType      = 3 ;SERVICE_DEMAND_START
+ErrorControl   = 1 ;SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\ntflt.sys
+AddReg         = NTFLT.AddService.AddReg
+
+[NTFLT.AddService.AddReg]
+; ----------------------------------------------------------------------
+; Add any miniport-specific parameters here.  These are params that your
+; filter device is going to use.
+;
+;HKR, Parameters, ParameterName,  0x10000, "MultiSz", "Parameter", "Value"
+;HKR, Parameters, ParameterName2, 0x10001, 4
+
+
+; ----------------------------------------------------------------------
+; File copy
+;
+[SourceDisksNames]
+1=%DiskDescription%,"",,
+
+[SourceDisksFiles]
+ntflt.sys=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+NTFLT.Files.Sys   = 12   ; %windir%\System32\drivers
+
+[NTFLT.Files.Sys]
+ntflt.sys,ntfltxp.sys,,2
+
+; ----------------------------------------------------------------------
+; Filter Install
+;
+
+[NTFLT.ndi.AddReg]
+HKR, Ndi, HelpText, , %NT_HELP%
+
+; ----------------------------------------------------------------------
+; !!--Filter Specific--!!
+;
+HKR, Ndi,            FilterClass,         , failover
+HKR, Ndi,            FilterDeviceInfId,   , nt_ndisfiltermp
+HKR, Ndi,            Service,             , ntflt
+HKR, Ndi\Interfaces, UpperRange,          , noupper
+HKR, Ndi\Interfaces, LowerRange,          , nolower
+HKR, Ndi\Interfaces, FilterMediaTypes,    , "ethernet, wan"
+
+[NTFLT.AddReg]
+; The following key is Required
+HKR, Parameters, Param1, 0, 4
+
+; ----------------------------------------------------------------------
+[Strings]
+Company = "Network"
+DiskDescription = "Network Filter Driver Disk"
+
+Network.DeviceDesc = "Network Filter Driver"
+NT_HELP = "Network Filter Driver"
+NTService_Desc = "Network Filter Service"
+
+
